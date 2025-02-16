@@ -33,7 +33,7 @@ public class CountingSort {
       System.out.print(inputArray[i] + " ");
     }
     int[] outputArray = countingSort(inputArray);
-    System.out.println("\n");
+    System.out.println();
     for (int i = 0; i < outputArray.length; i++) {
       System.out.print(outputArray[i] + " ");
     }
