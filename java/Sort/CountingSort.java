@@ -1,40 +1,77 @@
-import java.util.Arrays;
+
+/**
+ *
+ * Time complexity: O(n + k)
+ * 
+ * Counting Sort algorithm sorts an array by counting the number of times each
+ * value occurs
+ * 
+ * Coutinng Sort replies in couting occurrences of distinct values, so they must
+ * be integer,
+ * with integer, each value fits with an index (for non negative values)
+ *
+ * Couting sort is usually implemented by creating an array for counting,
+ * so that if we tried to sorting negative value we would get in trouble
+ * because negative values is outside the counting array
+ *
+ * If the number of possibile different values to be sorted k is larger than the
+ * number of
+ * value sorted n, the counting array we need for sorting will be larger than
+ * the original array
+ * we have that needs sorting, and the algorithm becomes ineffective
+ * 
+ * e.g: k= 40 n= 45 -> then the size of counting array would be 40
+ *
+ *
+ * And if k = k^7 = 10000000 we can still counting sort
+ */
 
 public class CountingSort {
   public static void main(String[] args) {
-    int[] arr = { 4, 2, 2, 8, 3, 3, 1 };
-    countingSort(arr);
-    System.out.println("Sorted array: " + Arrays.toString(arr));
+    int[] inputArray = { 4, 2, 2, 8, 3, 3, 1 };
+    for (int i = 0; i < inputArray.length; i++) {
+      System.out.print(inputArray[i] + " ");
+    }
+    int[] outputArray = countingSort(inputArray);
+    System.out.println("\n");
+    for (int i = 0; i < outputArray.length; i++) {
+      System.out.print(outputArray[i] + " ");
+    }
   }
 
-  private static void countingSort(int[] arr) {
+  private static int[] countingSort(int[] inputArray) {
 
-    // find the maximum value in the Arrays
-    int max = Arrays.stream(arr).max().getAsInt();
-    int min = Arrays.stream(arr).max().getAsInt();
-    int range = max - min + 1;
+    int n = inputArray.length;
+    int k = 0;
 
-    // create a count aray to store the count of each element
-    int[] count = new int[range];
-    int[] output = new int[arr.length];
-
-    // count the occurrence of each element
-    for (int num : arr) {
-      count[num - min]++;
+    // find the maximum values of unsorted array
+    for (int i = 0; i < n; i++) {
+      k = Math.max(k, inputArray[i]);
     }
 
-    // update the coutn array to store the position of each element in the output
-    // array
-    for (int i = 0; i < count.length; i++) {
-      count[i] += count[i - 1];
+    // creating new array to count each value occurs in array
+    int[] countArray = new int[k + 1];
+
+    // counting each time value occurs in array
+    for (int i = 0; i < n; i++) {
+      countArray[inputArray[i]]++;
     }
 
-    // build the output array
-    for (int i = arr.length - 1; i >= 0; i--) {
-      output[count[arr[i] - min] - 1] = arr[i];
-      count[arr[i] - min]--;
+    // Store the cumulative sum or prefix sum of the elecments of the countArray
+    for (int i = 1; i <= k; i++) {
+      // this will help in placing of the input array at the correct index in the
+      // output array
+      // mean you will know the position of elements will end at the sorted array
+      countArray[i] += countArray[i - 1];
     }
 
-    System.arraycopy(output, 0, arr, 0, arr.length);
+    int[] outputArray = new int[n];
+
+    for (int i = n - 1; i >= 0; i--) {
+      outputArray[countArray[inputArray[i]] - 1] = inputArray[i];
+      countArray[inputArray[i]]--;
+    }
+
+    return outputArray;
   }
 }
