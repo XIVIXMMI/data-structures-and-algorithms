@@ -20,43 +20,32 @@ public class Solution {
     int count = 1;
     int n = chars.length;
 
+    if (n == 0) {
+      return 0;
+    }
     // read for loop through value of array, write for update the value of array
     int read = 0;
     int write = 0;
 
-    for (read = 0; read < n - 1; read++) {
+    for (read = 1; read <= n; read++) {
       // compare the current value to the next value of array
-      if (chars[read] != chars[read + 1]) {
+      if (read == n || chars[read] != chars[read - 1]) {
         // if there are an unique value of array, write the value
-        chars[write] = chars[read];
-        write++;
+        chars[write++] = chars[read - 1];
         // incase count have value, write it to the next position in array, then reset
         // value of count
         if (count > 1) {
-          for (char c : String.valueOf(count).toCharArray()) {
-            chars[write] = c;
-            write++;
+          int start = write;
+          while (count > 0) {
+            chars[write++] = (char) (count % 10 + '0');
+            count /= 10;
           }
-          count = 1;
+          reverse(chars, start, write - 1);
         }
+        count = 1;
       } else {
         count++;
       }
-    }
-
-    // handle the last unique element of array
-    chars[write] = chars[read];
-    write++;
-    if (count > 1) {
-      for (char c : String.valueOf(count).toCharArray()) {
-        chars[write] = c;
-        write++;
-      }
-    }
-
-    // remove the rest of array
-    for (int i = write; i < n; i++) {
-      chars[i] = '\0';
     }
 
     // result
@@ -65,6 +54,14 @@ public class Solution {
     }
     System.out.println("");
     return write;
+  }
+
+  private static void reverse(char[] chars, int left, int right) {
+    while (left < right) {
+      char temp = chars[left];
+      chars[left++] = chars[right];
+      chars[right--] = temp;
+    }
   }
 
   public static void main(String[] args) {
