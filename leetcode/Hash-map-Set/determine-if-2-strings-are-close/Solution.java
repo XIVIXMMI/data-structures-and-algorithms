@@ -37,6 +37,7 @@ public class Solution {
       return false;
     }
 
+    // get sorted list of frequency counts
     List<Integer> counts1 = new ArrayList<>(map1.values());
     List<Integer> counts2 = new ArrayList<>(map2.values());
 
