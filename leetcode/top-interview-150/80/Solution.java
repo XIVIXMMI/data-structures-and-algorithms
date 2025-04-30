@@ -19,17 +19,22 @@ public class Solution {
   public static int removeDuplicates(int[] nums) {
 
     int j = 0;
-    int count = 0;
     int n = nums.length;
+
     for (int i = 0; i < n; i++) {
-      if (nums[i] == nums[j]) {
+      if (j < 2 || nums[i] != nums[j - 2]) {
+        nums[j] = nums[i];
         j++;
-        count++;
-      }
-      if (count == 3) {
-        count = 0;
       }
     }
-    return 0;
+    for (int num : nums) {
+      System.out.println(num);
+    }
+    return j;
+  }
+
+  public static void main(String[] args) {
+    int[] nums = { 0, 0, 1, 1, 1, 1, 2, 3, 3 };
+    System.out.println(removeDuplicates(nums));
   }
 }
