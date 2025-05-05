@@ -10,7 +10,6 @@ public class Solution {
     int n = nums.length;
     k = k % n;
     int[] rotateElements = new int[k];
-    int j = k;
 
     for (int i = 0; i < k; i++) {
       rotateElements[i] = nums[n - k + i];
