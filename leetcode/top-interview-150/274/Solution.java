@@ -41,11 +41,24 @@ public class Solution {
     return h;
   }
 
+  /**
+   * First create a count[] array with n+1 elements
+   * use to count papers have been cited `i` times
+   * if the papers have the citations >= n, we'll combine them at the count[n]
+   *
+   */
+
   public static int betterHIndex(int[] citations) {
     int n = citations.length;
     int[] count = new int[n + 1];
-    int h = 0;
+    int total = 0;
 
+    /**
+     * With each citations[i], if c >= n then count[n]++
+     * ( we will not follow exactly which elements > n, just throw them to the end)
+     * if c < n then count[c]++; (count elements at c position)
+     * after the loop, count[i] = papers with exactly i citations
+     */
     for (int i = 0; i < count.length - 1; i++) {
       int c = citations[i];
       if (c >= n) {
@@ -55,14 +68,24 @@ public class Solution {
       }
     }
 
+    /**
+     * Then we'll do a reverse loop
+     * Browser from n to 0 element, find the greatest value i which total >= i
+     * total will cucumlative papers at least i citations
+     * when total >= i -> then exist at least i papers have >= i citations
+     * then return i
+     */
     for (int i = n; i >= 0; i--) {
-      h += count[i];
-      if (h >= i) {
+      total += count[i];
+      if (total >= i) {
         return i;
       }
     }
 
-    return h;
+    /**
+     * in case we couldn't find i with at least i papers >= i ci
+     */
+    return total;
 
   }
 
