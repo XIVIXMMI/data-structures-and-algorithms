@@ -8,12 +8,15 @@
 
 class Solution {
     public static int strStr(String haystack, String needle) {
+
+        if(needle.length() == 0) return 0;
         
         char[] str1 = haystack.toCharArray();
         char[] str2 = needle.toCharArray();
 
         int i = 0, j = 0;
         int reset = -1;
+
 
         while(i < str1.length){
 
