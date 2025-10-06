@@ -18,7 +18,7 @@ class Solution {
 
             int limit = Math.min(s1.length(), s2.length());
 
-            if (s1.isEmpty() || s1.isEmpty())
+            if (s1.isEmpty() || s2.isEmpty())
                 return "";
 
             int k = 0;
