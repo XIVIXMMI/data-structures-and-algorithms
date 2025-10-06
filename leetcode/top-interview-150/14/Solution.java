@@ -10,17 +10,15 @@ import java.math.*;
 
 class Solution {
     public static String longestCommonPrefix(String[] strs) {
-        int i = 0;
+        String prfx = strs[0];
 
-        String prfx = strs[i];
-
-        while (i < strs.length - 1) {
+        for (int i = 0; i < strs.length - 1; i++) {
             String s1 = prfx;
             String s2 = strs[i + 1];
 
             int limit = Math.min(s1.length(), s2.length());
 
-            if (s1.length() == 0 || s2.length() == 0)
+            if (s1.isEmpty() || s1.isEmpty())
                 return "";
 
             int k = 0;
@@ -32,18 +30,26 @@ class Solution {
                 }
             }
 
-            prfx = s1.substring(0, k);
-
-            i++;
-
+            if (prfx.isEmpty()) {
+                break;
+            } else {
+                prfx = s1.substring(0, k);
+            }
         }
         return prfx;
     }
 
     public static void main(String[] args) {
         String[] strs = { "flower" };
-        String rs = longestCommonPrefix(strs);
-        System.out.println(rs);
+        String[] strs1 = { "dog", "racecar", "car" };
+        String[] strs2 = { "interview", "internet", "internal" };
+        String[] strs3 = { "a" };
+        String[] strs4 = { "", "abc" };
+        System.out.println(longestCommonPrefix(strs)); // -> "fl"
+        System.out.println(longestCommonPrefix(strs1)); // -> ""
+        System.out.println(longestCommonPrefix(strs2)); // -> "inter"
+        System.out.println(longestCommonPrefix(strs3)); // -> "a"
+        System.out.println(longestCommonPrefix(strs4)); // -> ""
     }
 
 }
