@@ -30,11 +30,10 @@ class Solution {
                 }
             }
 
-            if (prfx.isEmpty()) {
+            prfx = s1.substring(0, k);
+
+            if (prfx.isEmpty())
                 break;
-            } else {
-                prfx = s1.substring(0, k);
-            }
         }
         return prfx;
     }
