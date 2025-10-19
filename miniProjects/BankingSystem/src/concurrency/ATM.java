@@ -1,38 +1,43 @@
 package concurrency;
 
+import exception.InsufficientFundsException;
 import model.BankAccount;
+import service.BankAccountService;
 
 public class ATM extends Thread {
-    private BankAccount account;
 
-    public ATM(BankAccount account) {
+    private BankAccount account;
+    private BankAccountService service;
+
+    public ATM(BankAccount account, BankAccountService service) {
         this.account = account;
+        this.service = service;
     }
 
     @Override
-    public synchronized void run() {
+    public void run() {
         String threadName = Thread.currentThread().getName();
 
         // ATM-1, ATM-2, ATM-3 will deposit
         // ATM-4 ATM-5 will withdraw
-        if (threadName.equals("ATM-1") || threadName.equals("ATM-2") || threadName.equals("ATM-3")) {
-            // Deposit 10 time
-            for (int i = 0; i < 10; i++) {
-                synchronized (account) {
-                    double currentBalance = account.getBalance();
-                    double newBalance = currentBalance + 100;
-                    account.setBalance(newBalance);
-                    System.out.println(threadName + " deposit 100. Balance: " + account.getBalance());
+        synchronized (service) {
+            if (threadName.equals("ATM-4") || threadName.equals("ATM-5") || threadName.equals("ATM-6")) {
+                // Deposit 10 time
+                for (int i = 0; i < 20; i++) {
+                    service.deposit(account, 1000);
+                    System.out.println("[DEPOSIT] " + threadName + " Deposit 1000. Balance: " + account.getBalance());
+
                 }
-            }
-        } else {
-            // Withdraw 10 time
-            for (int i = 0; i < 10; i++) {
-                synchronized (account) {
-                    double currentBalance = account.getBalance();
-                    double newBalance = currentBalance - 50;
-                    account.setBalance(newBalance);
-                    System.out.println(threadName + " withdraw 50. Balance: " + account.getBalance());
+            } else {
+                // Withdraw 10 time
+                for (int i = 0; i < 11; i++) {
+                    try {
+                        service.withDraw(account, 2000);
+                        System.out.println(
+                                "[WITHDRAW] " + threadName + " Withdraw 2000. Balance: " + account.getBalance());
+                    } catch (InsufficientFundsException e) {
+                        System.out.println(" [WITHDRAW] " + threadName + " Insufficient balance ... current balance " + account.getBalance());
+                    }
                 }
             }
         }
