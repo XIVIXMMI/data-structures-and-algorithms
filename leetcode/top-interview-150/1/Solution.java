@@ -28,7 +28,7 @@ class Solution {
 
     public static void main(String[] args) {
         int[] nums = { 2, 7, 11, 15 };
-        int[] twoSum = TwoSum(nums, 9);
+        int[] twoSum = twoSum(nums, 9);
         for (int num : twoSum) {
             System.out.println(num);
         }
