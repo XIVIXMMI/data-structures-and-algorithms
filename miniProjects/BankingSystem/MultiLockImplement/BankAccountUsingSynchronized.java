@@ -12,19 +12,28 @@ public class BankAccountUsingSynchronized {
     }
 
     public synchronized void deposit(double amount) {
+        if(amount <= 0){
+            throw new IllegalArgumentException("Deposit amount must be positive");
+        }
         balance += amount;
-        System.out.println("Blance increase " + amount);
+        System.out.println("Blance increase by" + amount);
     }
 
     public synchronized void withDraw(double amount) {
-        if (balance > minimumBalance) {
+        if( amount <= 0){
+            throw new IllegalArgumentException("Withdraw amount must be positive");
+        }
+        if (balance - amount >= minimumBalance) {
             balance -= amount;
         } else {
-            System.out.println("Insuffient balance, need " + amount + "current balance " + balance);
+            System.out.println("Insufficient balance, need " + amount + " current balance " + balance);
         }
     }
 
     public void transfer(BankAccountUsingSynchronized from, BankAccountUsingSynchronized to, double amount) {
+        if( from == to){
+            throw new IllegalArgumentException("Cannot transfer to the same account");
+        }
         BankAccountUsingSynchronized firstLock = System.identityHashCode(from) < System.identityHashCode(to) ? from
                 : to;
 
@@ -33,7 +42,7 @@ public class BankAccountUsingSynchronized {
 
         synchronized (firstLock) {
             synchronized (secondLock) {
-                if (from.balance > amount) {
+                if (from.balance - amount >= minimumBalance) {
                     from.withDraw(amount);
                     to.deposit(amount);
                     System.out.println(Thread.currentThread().getName() + " transfered " + amount +
