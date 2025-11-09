@@ -24,7 +24,7 @@ public class Solution_1 {
             i++;
 
         }
-        return j;
+        return j + 1;
     }
 
     public static void main(String[] args) {
