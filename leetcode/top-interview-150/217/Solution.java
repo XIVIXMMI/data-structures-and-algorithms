@@ -15,9 +15,7 @@ public class Solution {
         Map<Integer, Integer> map = new HashMap<>();
         for (int num : nums) {
             map.put(num, map.getOrDefault(num, 0) + 1);
-        }
-        for (int count : map.values()) {
-            if (count > 1) {
+            if (map.get(num) > 1) {
                 return true;
             }
         }
@@ -25,7 +23,7 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-        int[] nums = { 1, 2, 3 }; // false
+        int[] nums = { 1, 2, 3, 1 }; // false
         System.out.println(containsDuplicate(nums));
     }
 }
