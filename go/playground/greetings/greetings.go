@@ -14,6 +14,20 @@ func Hello(name string) (string, error) {
 	return message, nil
 }
 
+func Hellos(names []string) (map[string]string, error) {
+	// A map associate with message
+	messages := make(map[string]string)
+	// Loop through the recieved slice of names, calling Hello function to get a message for each name
+	for _, name := range names {
+		message, err := Hello(name)
+		if err != nil {
+			return nil, err
+		}
+		messages[name] = message
+	}
+	return messages, nil
+}
+
 func randomFormat() string {
 	formats := []string{
 		"Hi %v. Welcome!",
