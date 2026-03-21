@@ -3,24 +3,20 @@ package main
 import "fmt"
 
 func twoSum(nums []int, target int) []int {
-	n := len(nums)
-
-	for i := 0; i < n-1; i++ {
-		for j := i + 1; j < n; j++ {
-			if target-nums[i] == nums[j] {
-				arr := [2]int{i, j}
-				return arr[:]
-			}
+	m := make(map[int]int)
+	for i, num := range nums {
+		complement := target - num
+		if preIndex, exists := m[complement]; exists {
+			return []int{preIndex, i}
 		}
-
+		m[num] = i
 	}
 	return nil
-
 }
 
 func main() {
-	nums := []int{2, 5, 5, 11}
-	target := 10
+	nums := []int{3, 2, 4}
+	target := 6
 
 	fmt.Println(twoSum(nums, target))
 
