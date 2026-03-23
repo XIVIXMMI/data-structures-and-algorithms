@@ -11,12 +11,15 @@ func main() {
 
 func maxProfit(prices []int) int {
 	maxProfit := 0
-	minIndex := 0
-	for i, price := range prices {
-		if prices[minIndex] > price {
-			minIndex = i
+	minPrice := prices[0]
+
+	for _, price := range prices {
+		if minPrice > price {
+			minPrice = price
 		}
-		maxProfit = max(prices[i]-prices[minIndex], maxProfit)
+		if price-minPrice > maxProfit {
+			maxProfit = price - minPrice
+		}
 	}
 
 	return maxProfit
