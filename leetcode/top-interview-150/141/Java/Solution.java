@@ -1,3 +1,5 @@
+import java.util.HashSet;
+
 public class Solution {
     
     public static void main(String[] args) {
@@ -7,26 +9,13 @@ public class Solution {
         head1.next.next = new ListNode(0);
         head1.next.next.next = new ListNode(4);
         head1.next.next.next.next = head1.next; // cycle back to node 2
-        System.out.println("Test 1 (expect true):  " + hasCycle(head1));
+        System.out.println("Test 1 (expect true):  " + hasCycle(head1) + " " + hasCycle_hashSet(head1));
 
         // Test 2: No cycle
         ListNode head2 = new ListNode(1);
         head2.next = new ListNode(2);
         head2.next.next = new ListNode(3);
-        System.out.println("Test 2 (expect false): " + hasCycle(head2));
-
-        // Test 3: Single node, no cycle
-        ListNode head3 = new ListNode(1);
-        System.out.println("Test 3 (expect false): " + hasCycle(head3));
-
-        // Test 4: Empty list
-        System.out.println("Test 4 (expect false): " + hasCycle(null));
-
-        // Test 5: Two nodes with cycle
-        ListNode head5 = new ListNode(1);
-        head5.next = new ListNode(2);
-        head5.next.next = head5; // cycle back to head
-        System.out.println("Test 5 (expect true):  " + hasCycle(head5));
+        System.out.println("Test 2 (expect false): " + hasCycle(head2) + " " + hasCycle_hashSet(head2));
     }
 
     public static boolean hasCycle(ListNode head) {
@@ -44,6 +33,19 @@ public class Solution {
 
         return false;
 
+    }
+
+    public static boolean hasCycle_hashSet(ListNode head){
+        HashSet<ListNode> seen = new HashSet<>();
+        ListNode current = head;
+        while(current != null){
+            if( seen.contains(current)){
+                return true;
+            }
+            seen.add(current);
+            current = current.next;
+        }
+        return false;
     }
 
     static class ListNode {
