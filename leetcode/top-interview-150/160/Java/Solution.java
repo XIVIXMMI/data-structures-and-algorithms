@@ -21,6 +21,16 @@ public class Solution {
         return null;
     }
 
+    public static ListNode getIntersectionNode_TwoPointers(ListNode headA, ListNode headB) {
+        ListNode pA = headA;
+        ListNode pB = headB;
+        while( pA != pB){
+            pA = (pA == null) ? headB : pA.next;
+            pB = (pB == null) ? headA : pB.next;
+        }
+        return pA;
+    }
+
     static class ListNode {
         int val;
         ListNode next;
