@@ -20,7 +20,7 @@ public class TreeNode {
 class Solution {
     public TreeNode sortedArrayToBST(int[] nums) {
         int left = 0;
-        int right = nums.length;
+        int right = nums.length - 1;
 
         return solve(nums, left, right);
     }
