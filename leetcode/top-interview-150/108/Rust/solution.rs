@@ -38,6 +38,6 @@ impl Solution {
             val: nums[mid],
             left: Self::solve(nums, left, mid as i32 - 1),
             right: Self::solve(nums, mid as i32 + 1, right)
-        }))
+        })))
     }
 }
