@@ -5,11 +5,15 @@ class Solution {
         int n = temperatures.length;
         int[] answer = new int[n];
         Stack<Integer> stack = new Stack<>();
+        stack.push(0);
 
-        while (n > 0) {
-            
+        for (int i = 1; i < n; i++) {
+            while(!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]){
+                int idx = stack.pop();
+                answer[idx] = i - idx;
+            }
+            stack.push(i);
         }
-
 
         return answer;
     }
