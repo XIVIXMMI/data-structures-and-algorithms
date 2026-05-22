@@ -1,6 +1,7 @@
 import java.util.Stack;
 
 class Solution {
+    // Time Complexity = O(n) ~ 61ms
     public int[] dailyTemperatures(int[] temperatures) {
         int n = temperatures.length;
         int[] answer = new int[n];
@@ -13,6 +14,24 @@ class Solution {
                 answer[idx] = i - idx;
             }
             stack.push(i);
+        }
+
+        return answer;
+    }
+
+    // Time Complexity = O(n) ~ 6ms
+    public int[] dailyTemperatures_Array(int[] temperatures) {
+        int n = temperatures.length;
+        int[] answer = new int[n];
+        int[] stack = new int[n];
+        int top = -1; // stack is empty
+
+        for (int i = 1; i < n; i++) {
+            while(top != -1 && temperatures[i] > temperatures[stack[top]]){
+                int idx = stack[top--]; // pop stack
+                answer[idx] = i - idx;
+            }
+            stack[++top] = i;
         }
 
         return answer;
