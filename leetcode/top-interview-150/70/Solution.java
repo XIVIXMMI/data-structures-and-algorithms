@@ -3,7 +3,7 @@ class Solution {
     public int climbStairsRecursive(int n) {
         if(n == 1) return 1;
         if(n == 2) return 2;
-        return climbStairs(n - 1 ) + climbStairs(n - 2);
+        return climbStairsRecursive(n - 1 ) + climbStairsRecursive(n - 2);
     }
 
     //dp[i]=dp[i−1]+dp[i−2]
