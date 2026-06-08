@@ -19,7 +19,7 @@ class TreeNode {
 
 class Solution {
 
-    static int maxDiameter = 0;
+    int maxDiameter = 0;
 
     public int diameterOfBinaryTree(TreeNode root) {
         depth(root);
