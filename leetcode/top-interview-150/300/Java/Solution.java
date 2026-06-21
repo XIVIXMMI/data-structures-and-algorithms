@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 class Solution {
     // Time Complexity = O(n^2)
-    public int lengthOfLIS(int[] nums) {
+    public int lengthOfLISBF(int[] nums) {
         int[] dp = new int[nums.length];
         Arrays.fill(dp, 1);
 
@@ -20,5 +20,30 @@ class Solution {
         }
 
         return rs;
+    }
+
+    public int lengthOfLIS(int[] nums) {
+        int[] tails = new int[nums.length];
+        int size = 0; 
+
+        for (int num : nums) {
+            int left = 0, right = size;
+
+            while ( left < right) {
+                int mid = left + (right - left) / 2;
+                if( tails[mid] >= num) {
+                    right = mid;
+                } else {
+                    left = mid + 1;
+                }
+            }
+
+            tails[left] = num;
+            if (left == size) {
+                size++;
+            }
+        }
+
+        return size;
     }
 }
