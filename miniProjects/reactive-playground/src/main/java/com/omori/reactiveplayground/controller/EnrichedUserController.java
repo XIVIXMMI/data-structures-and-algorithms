@@ -1,6 +1,7 @@
 package com.omori.reactiveplayground.controller;
 
 import com.omori.reactiveplayground.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @RestController
+@AllArgsConstructor
 public class EnrichedUserController {
 
     @Autowired
