@@ -9,6 +9,7 @@ public class Solution2 {
         HashSet<Character>[] rows = new HashSet[9];
         HashSet<Character>[] cols = new HashSet[9];
 
+        // create empty set
         for (int i = 0; i < 9; i++) {
             boxes[i] = new HashSet<>();
             rows[i] = new HashSet<>();
@@ -23,21 +24,23 @@ public class Solution2 {
                     continue;
                 }
 
+                // Calculate the position of the value in the box 3x3
                 int boxesIndex = (i / 3) * 3 + (j / 3);
 
+                // Check if the nums is existed in the row, col or the position of the box
                 if (rows[i].contains(num)
                         || cols[j].contains(num)
                         || boxes[boxesIndex].contains(num)) {
                     return false;
                 }
 
+                // fill value for the next loops check
                 rows[i].add(num);
                 cols[j].add(num);
                 boxes[boxesIndex].add(num);
             }
         }
         return true;
-
     }
 
     public static void main(String[] args) {
