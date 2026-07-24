@@ -14,8 +14,8 @@ class Solution {
             char c = pattern.charAt(i);
             String str = words[i];
 
-            if(mapPS.containsKey(c) && mapPS.get(c).equals(str)) return false;
-            if(mapSP.containsKey(str) && mapSP.get(str).equals(c)) return false;
+            if(mapPS.containsKey(c) && !mapPS.get(c).equals(str)) return false;
+            if(mapSP.containsKey(str) && !mapSP.get(str).equals(c)) return false;
 
             mapPS.put(c, str);
             mapSP.put(str, c);
