@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
 
 import java.awt.*;
 import java.time.Duration;
@@ -103,4 +105,37 @@ public class ExternalApiController {
                         System.out.println("Get the posts - Thread: " + Thread.currentThread().getName()));
     }
 
+    @GetMapping("/user-with-first-post/{id}")
+    public Mono<String> getUserWithFirstPost (@PathVariable String id) {
+        return webClient.get()
+                .uri("/users/{id}",id)
+                .retrieve()
+                .bodyToMono(String.class)
+                .flatMap(userJson -> {
+                    System.out.println("Already get the user, continue call API to get post...");
+                    return webClient.get()
+                            .uri("/posts?userId={id}",id)
+                            .retrieve()
+                            .bodyToMono(String.class);
+                });
+    }
+
+    @GetMapping("/get-safe-user/{id}")
+    public Mono<String> getSafeUser(@PathVariable String id){
+        return webClient.get()
+                .uri("/users/{id}",id)
+                .retrieve()
+                .bodyToMono(String.class)
+                .flatMap(userJson ->
+                        webClient.get()
+                        .uri("/posts?userId={id}",id)
+                        .retrieve()
+                        .bodyToMono(String.class))
+                .retryWhen(Retry.max(2)
+                        .filter(error -> !(error instanceof WebClientResponseException.NotFound))
+                        // only retry when the error is not 404
+                )
+                .doOnError(err -> System.out.println("Logging Error: " + err.getMessage()))
+                .onErrorResume(error -> Mono.just("Get data failed!"));
+    }
 }
