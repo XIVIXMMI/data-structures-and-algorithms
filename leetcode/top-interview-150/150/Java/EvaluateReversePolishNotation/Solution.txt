@@ -1,0 +1,34 @@
+
+int evalRPN(String[] tokens)
+    Stack<Int> stack;
+
+    for each token in tokens: 
+        num1;
+        num2;
+
+        switch: 
+            case '+':
+                num1 = stack.pop();
+                num2 = stack.pop()'
+                stack.push(num2 + num1);
+                break;
+            case '-':
+                num1 = stack.pop();
+                num2 = stack.pop()'
+                stack.push(num2 - num1);
+                break;
+            case '*':
+                num1 = stack.pop();
+                num2 = stack.pop()'
+                stack.push(num2 * num1);
+                break;
+            case '/':
+                num1 = stack.pop();
+                num2 = stack.pop()'
+                stack.push(num2 / num1);
+                break;
+            default: 
+                stack.push(token)
+                
+    return stack.pop();
+
