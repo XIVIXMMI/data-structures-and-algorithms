@@ -35,8 +35,7 @@ impl Solution {
                 if p.val != q.val {
                     return false;
                 }
-                return Self::is_same_tree(p.left.clone(), q.left.clone()) 
-                    && Self::is_same_tree(p.right.clone(), q.right.clone())
+                return Self::is_same_tree(p.left.clone(), q.left.clone()) && Self::is_same_tree(p.right.clone(), q.right.clone())
             }
         }
     }
